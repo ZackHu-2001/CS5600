@@ -1,0 +1,69 @@
+Homework (Simulation)
+
+Q1.  
+process tree is like:
+a -- b
+
+a -- b
+  |- c
+
+a -- b
+
+a -- b
+  |- d
+
+a -- b  
+  |- d
+  |- e
+
+
+Q2.
+With higher fork_percentage, the process tree would grow larger
+and deeper with more nodes. When fork_percentage being low, the tree
+would be shallow and small.
+
+
+Q3.
+take random seed 100, and action number 10 as an example
+the instruction is: "python3 fork.py -s 100 -t -a 10"
+the action list is:
+a fork b;
+b exit;
+a fork c;
+c fork d;
+c exit;
+d fork e;
+a fork f;
+d fork g;
+g fork h;
+h fork i;
+
+
+Q4. 
+Through experiment, I found that when we not specify that 
+reparent to local parent, the child process would be given
+to the root process, rather than the parent of the parent process.
+
+Q5.
+instruction: "python3 fork.py -s 15 -a 10 -F"
+tree: a -- d -- f -- g
+       |- e
+instruction: "python3 fork.py -s 20 -a 10 -F"
+tree: a -- g
+       |- f
+
+Q6.
+When the action number equals to the node number, 
+which means no exit, then I think it is okay to figure out
+the action list.
+
+However, when there exist exit action, I think no matter what rules
+applied for reparent, we can not tell what happened.
+
+For example, 
+instruction: "python3 fork.py -A a+b,b+c,a+d,a+e,b- -t -F"
+instruction: "python3 fork.py -A a+b,a+c,b+d,a+e,b- -t -F"
+instruction: "python3 fork.py -A a+b,a+c,a+d,b+e,b- -t -F"
+these three instructions would give same process tree (though in 
+different order), and we can not tell for the final tree, which 
+instruction was taken.

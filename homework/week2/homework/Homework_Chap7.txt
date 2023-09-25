@@ -1,0 +1,60 @@
+1. Compute the response time and turnaround time when running
+three jobs of length 200 with the SJF and FIFO schedulers.
+
+Instruction: "python3 scheduler.py -l 200,200,200"
+Instruction: "python3 scheduler.py -l 200,200,200 -p SJF"
+Result: They have the same response time and turnaround time.
+
+2. Now do the same but with jobs of different lengths: 100, 200, and
+300.
+
+Instruction: "python3 scheduler.py -l 100,200,300"
+Instruction: "python3 scheduler.py -l 100,200,300 -p SJF"
+Result: They still have the same response time and turnaround time.
+
+Average -- Response: 133.33  Turnaround 333.33  Wait 133.33
+
+3. Now do the same, but also with the RR scheduler and a time-slice
+of 1.
+
+Instruction: "python3 scheduler.py -l 100,200,300 -p RR -q 1"
+Result: The response time is lower, however, both the turnaround time and Wait
+time increased.
+
+4. For what types of workloads does SJF deliver the same turnaround
+times as FIFO?
+
+For a list of jobs j1, j2, j3, ... jn. We denote the arrive time of 
+job 1 as a(j1) and time it requires as t(j1). If it satisfy that 
+1) a(j1) <= a(j2) <= a(j3) ... <= a(jn)  2) t(j1) <= t(j2) <= t(j3) <= ...
+<= t(jn), then the turnaround time is the same, because the order of 
+execution is the same.
+
+5. For what types of workloads and quantum lengths does SJF deliver
+the same response times as RR?
+
+If SJF has n jobs, then the first n-1 jobs's workloads have to be 
+the same with in the time-slice defined in RR.
+
+6. What happens to response time with SJF as job lengths increase?
+Can you use the simulator to demonstrate the trend?
+
+"python3 scheduler.py -l 100,200,300 -p SJF -c"
+Response: 133.33  Turnaround 333.33  Wait 133.33
+
+"python3 scheduler.py -l 1000,2000,3000 -p SJF -c"
+Response: 1333.33  Turnaround 3333.33  Wait 1333.33
+
+"python3 scheduler.py -l 10000,20000,30000 -p SJF -c"
+Response: 13333.33  Turnaround 33333.33  Wait 13333.33
+
+The trend is that with longer length, the response time increase.
+
+7. What happens to response time with RR as quantum lengths increase? 
+Can you write an equation that gives the worst-case response time, given N jobs?
+
+Responce time decrease with longer quantum length.
+
+(Below, the Q means the quantum used by RR)
+The total response time would be "((n-1)+0)*n*Q/2" in worst case.
+The avg response time would be "((n-1)+0)*Q/2".

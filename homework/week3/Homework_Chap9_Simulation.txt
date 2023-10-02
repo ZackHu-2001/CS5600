@@ -1,0 +1,62 @@
+Q1.
+ py lottery.py -j 3 -s 1 -c
+ py lottery.py -j 3 -s 2 -c
+ py lottery.py -j 3 -s 3 -c
+
+Q2.
+What happens when the number of tickets is so imbalanced?
+The task with overwhelming tickets always get the chance 
+to run first, while the other one keep starving.
+
+Will job 0 ever run before job 1 completes? How often? 
+Yes, it is possible, but with limited chance. The chance
+that job 0 have no chance to run before job 1 completes
+is  (100/101)^10 = 0.7273, therefore, the chance that 
+job 0 run before job 1 completes is 1 - 0.7273 = 0.2726.
+
+In general, what does such a ticket imbalance do to the
+ behavior of lottery scheduling?
+Obviously, it leads to starvation.
+This kind of imbalance leads to the result that it acts
+like priority queue, only when high priority task finished
+then would low priority job start.
+
+Q3.
+python3 lottery.py -l 100:100,100:100 -s 1 -c
+job 1 finish at 196, job 0 finish at 200, 
+difference: 200 - 196 = 4, 4 / 200 = 0.02
+
+python3 lottery.py -l 100:100,100:100 -s 2 -c
+job 1 finish at 190, job 0 finish at 200
+difference: 200 - 190 = 10, 10 / 200 = 0.05
+
+python3 lottery.py -l 100:100,100:100 -s 3 -c
+job 1 finish at 196, job 0 finish at 200
+difference: 200 - 196 = 4, 4 / 200 = 0.02
+
+Q4.
+python3 lottery.py -l 100:100,100:100 -s 1 -q 10 -c
+job 1 finish at 160, job 0 finish at 200, 
+difference: 200 - 160 = 40, 40 / 200 = 0.2
+
+python3 lottery.py -l 100:100,100:100 -s 2 -q 10 -c
+job 1 finish at 190, job 0 finish at 200
+difference: 200 - 190 = 10, 10 / 200 = 0.05
+
+python3 lottery.py -l 100:100,100:100 -s 3 -q 10 -c
+job 1 finish at 196, job 0 finish at 200
+difference: 200 - 190 = 10, 10 / 200 = 0.05
+
+The difference getting bigger with larger quantum.
+
+
+Q5.
+Can you make a version of the graph that is found in the chapter?
+What else would be worth exploring? How would the graph look
+
+with a stride scheduler?
+OPERATING
+SYSTEMS
+[VERSION 1.01]
+WWW.OSTEP.ORG
+

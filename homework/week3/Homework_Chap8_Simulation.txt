@@ -1,0 +1,90 @@
+
+
+Q1. 
+Instruction: "python3 mlfq.py -s 1 -n 2 -j 2 -i 0 -m 25"
+Result: 
+    Job List:
+      Job  0: startTime   0 - runTime   4 - ioFreq   8
+      Job  1: startTime   0 - runTime  19 - ioFreq   3
+    The Job0 would first finish its task with priority 1
+    Then comes the Job1, it would first run 10 quatum in
+    priority 1 then drop to priority 0. However, as 
+    there is no other task, after drop to priority 1 
+    it would start immediatly without delay, and finish
+    its task within this 10 quatum period.
+
+Instruction: "python3 mlfq.py -s 3 -n 2 -j 2 -i 0 -m 25"
+
+Result:
+    Job List:
+      Job  0: startTime   0 - runTime   6 - ioFreq   5
+      Job  1: startTime   0 - runTime   9 - ioFreq   6
+
+    As the default quatum for queue 0 and 1 is 10, the Job 0
+    would run first at priority 1 and finish its task without
+    drop to priority 0. Then runs the Job 1, which would 
+    finish running within priority 1 as well.
+
+Q2. How would you run the scheduler to reproduce each of the examples in the chapter?
+
+For figure 8.2
+"python3 mlfq.py -l 0,200,0 -n 3 -i 0 -c"
+
+For figure 8.3 (LEFT)
+"python3 mlfq.py -l 0,200,0:100,20,0 -n 3 -i 0 -c"
+
+For figure 8.3 (RIGHT)
+"python3 mlfq.py -l 0,175,0:50,25,1 -n 3 -i 5 -S -c"
+
+For figure 8.4 (LEFT)
+"python3 mlfq.py -l 0,110,0:100,50,1:100,50,1 -n 3 -i 1 -S -c"
+
+For figure 8.4 (RIGHT) 
+"python3 mlfq.py -l 0,150,0:100,50,1:100,50,1 -n 3 -i 1 -S -B 50 -c"
+
+For figure 8.5 (LEFT)
+"python3 mlfq.py -l 0,200,0:100,100,5 -n 3 -i 1 -S -c"
+
+For figure 8.5 (RIGHT)
+"python3 mlfq.py -l 0,200,0:100,100,5 -n 3 -i 1 -a 1 -c"
+
+For figure 8.6
+"python3 mlfq.py -l 0,150,0:0,150,0 -n 3 -Q 10,20,40 -a 2 -c"
+
+
+Q3. How would you configure the scheduler parameters to behave just
+like a round-robin scheduler?
+
+If there is no IO job, the thing is easy: have one queue only, set a
+fixed quantum like 10. For example: "python3 mlfq.py -l 0,150,0:0,150,0
+ -n 1 -q 10 -c".
+
+If there have IO job, I think the default behavior of this simulator
+is to switch to next task, thus perhaps it is not possible to behave
+just like RR. For example: "python3 mlfq.py -l 0,20,2:0,20,3:0,20,2
+ -n 1 -q 10 -c".
+
+
+Q4.
+"python3 mlfq.py -l 0,100,1:0,100,0 -n 3 -i 0 -S -c"
+Use this instruction, from time 10 to 109, 99 consecutive execution 
+on job 0, 1 execution left for job 1.
+
+Q5.
+Given a system with a quantum length of 10 ms in its highest queue,
+how often would you have to boost jobs back to the highest priority
+level (with the -B flag) in order to guarantee that a single long-
+running (and potentially-starving) job gets at least 5% of the CPU?
+
+"python3 mlfq.py -l 0,40,1:0,200,1:0,200,1 -n 3 -i 0 -S -B 200 -c"
+200 ms
+
+
+Q6.
+"python3 mlfq.py -l 0,50,5:0,50,5:0,50,5 -n 3 -i 5 -S -c"
+if -I not specified, then the three tasks run alternatively.
+
+"python3 mlfq.py -l 0,50,5:0,50,5:0,50,5 -n 3 -i 5 -S -c -I"
+If -I specified, then for the first 100 time slice only 
+switching between task one and two. 
+

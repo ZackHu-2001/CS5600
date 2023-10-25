@@ -1,0 +1,51 @@
+
+Q2.
+
+I run the command on WSL Ubuntu
+
+zack@DESKTOP-73TH9VQ:~$ free -m
+               total        used        free      shared  buff/cache   available
+Mem:           15913         583       14587           0         742       15066
+Swap:           4096           0        4096
+
+
+Q4.
+
+How do the memory usage totals change when your program is running? 
+To test it, I opened two ubuntu terminal.Once I start running the program in one terminal and set 500 mb, 
+the other terminal shows the available mb minus 2. 
+
+And later, I tried with different memory usage (1, 5, 10, 50, 100, 300, 500), it shows the same result:
+on the other terminal, the available memory minus 2 mb.
+
+I have no idea what WSL had done, but I think perhaps OS detected the action of my code and OS did some optimization  
+
+How about when you kill the memory-user program?
+
+On the other terminal, the available memory adds 2 mb.
+
+Do the numbers match your expectations? 
+Obviously not, haha.
+
+Try this for different amounts of memory usage. What happens when you use really large amounts of memory?
+It crushes, the program ternimates without any hint, neither give the error message that I write in the code.
+
+
+Q7.
+
+What do you see?
+A list of parameter related to address and memory.
+
+How many different entities make up a modern address space, as opposed to our simple conception of code/stack/heap?
+Perhaps around 20 or more, as shown in pmap -X PID. 
+
+Q8.
+Finally, let’s run pmap on your memory-user program, with different amounts of used memory. 
+What do you see here? 
+Between two consecutive run with 1 mb and 1000 mb, 
+there is no difference in the information shown after running pmap.
+No matter with concise version using -x or detailed version using -X.
+
+Does the output from pmap match your expectations?
+
+I would say it does not, haha
